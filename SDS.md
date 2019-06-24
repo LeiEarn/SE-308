@@ -57,6 +57,60 @@ WePY 是一款让小程序支持组件化开发的框架，通过预编译的手
     4. 获取任务详情
     5. 用户发布、中止、接受、放弃、完成任务。
 
+页面渲染、路由控制等操作都由微信小程序框架完成，采用组件化开发的思想，将每个页面抽象为一个组件，页面中也可以包括子组件。
+
+* 系统的每个界面可能会使用到公共的资源，如公共组件、工具函数等等，将这些部分分别抽离成components、lib、style等子包；
+* assets触发静态资源，如图片、图标等。
+
+最后用户端的结构如下：
+
+```
+.
+├── package.json                    # 项目总体信息，依赖列表
+├── package-lock.json               # 依赖 lock
+├── project.config.json             # 小程序部分设置项
+├── README.md                       # 介绍页
+├── src                             # 小程序源代码部分
+│   ├── app.wpy                     # 小程序入口
+│   ├── assets                      # 静态资源
+│   │   └── ...
+│   ├── components                  # 复用组件
+│   │   └── ...
+│   ├── lib                         # 杂项库
+│   │   ├── cookieJar.js            # cookie库
+│   │   └──  request.js             # 网络请求库
+│   ├── style                       # wxss 全局变量
+│   │   ├── iconfont.wxss           # iconfont 资源
+│   │   └── weui.wxss               # weui 样式库
+│   ├── mixins                      # 混合组件
+│   │   └── ...
+│   └── pages                       # 小程序页面
+│       ├── index.wpy               # 主页
+│       ├── issue.wpy               # 任务发布页面
+│       ├── authorize.wpy               # 授权页面
+│       ├── search.wpy               # 搜索页面
+│       ├── about.wpy               # 小程序关于页面
+│       ├── user                    # 用户
+│       │   ├── mine.wpy            # 我的 页面
+│       │   ├── info.wpy            # 信息修改 页面
+│       │   ├── auth.wpy            # 身份认证 页面
+│       │   ├── balance.wpy            # 余额 页面
+│       │   ├── team.wpy            # 组织 页面
+│       │   ├── teamdetail.wpy            # 组织详情 页面
+│       │   └── setting.wpy            # 设置 页面
+│       ├── task                    # task
+│       │   ├── task.wpy            # 任务 页面
+│       │   ├── published.wpy          # 我的已发布任务 页面
+│       │   ├── accepted.wpy        # 我的已接受任务 页面
+│       │   ├── accepter.wpy        # 任务的接收者 页面
+│       │   └── detail.wpy          # 任务 页面
+│       └── publish                # 发布
+│           ├── publish.wpy             # 发布 页面
+│           ├── normaltask.wpy             # 普通任务发布 页面
+│           └── wjx.wpy             # 问卷星发布 页面
+└── wepy.config.js                  # wepy 构建配置
+```
+
 ### 1.2 管理员端
 
 ## 2. Server
