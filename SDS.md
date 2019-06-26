@@ -104,10 +104,14 @@ WePY 是一款让小程序支持组件化开发的框架，通过预编译的手
 │       │   ├── accepted.wpy        # 我的已接受任务 页面
 │       │   ├── accepter.wpy        # 任务的接收者 页面
 │       │   └── detail.wpy          # 任务 页面
-│       └── publish                # 发布
-│           ├── publish.wpy             # 发布 页面
-│           ├── normaltask.wpy             # 普通任务发布 页面
-│           └── wjx.wpy             # 问卷星发布 页面
+│       ├── publish                # 发布
+│       |   ├── publish.wpy             # 发布 页面
+│       |   ├── normaltask.wpy             # 普通任务发布 页面
+│       |   └── wjx.wpy             # 问卷星发布 页面
+|       └── about                   # 关于
+|           ├── behaviorItem.wpy        # 用户行为规范
+|           ├── privacyItem.wpy        # 隐私权条款
+|           └── publishItem.wpy        # 用户发布条例
 └── wepy.config.js                  # wepy 构建配置
 ```
 
