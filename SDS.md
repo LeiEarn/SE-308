@@ -123,13 +123,14 @@ WePY 是一款让小程序支持组件化开发的框架，通过预编译的手
 
 #### 1.2.1 技术选型及理由
 
-**webpack+vue+vue-router+ElementUI+axios**
+**webpack+vue+vue-router+ElementUI+axios+ECharts**
 
 - vue：一套用于构建用户界面的渐进式框架
 - vue-router：Vue.js的官方路由器
 - ElementUI：一个ui库，它不依赖于vue。但是却是当前和vue配合做项目开发的一个比较好的ui框架。
 - webpack：用来打包js工程的工具
 - axios：一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中
+- ECharts：一个纯 Javascript 的图表库，可以流畅的运行在 PC 和移动设备上
 
 **Vue**
 
@@ -153,6 +154,14 @@ webpack 2优化了构建打包的算法，优化前端的模块加载，整合�
 
 axios是基于 Promise 的 HTTP 请求客户端，可同时在浏览器和 node.js 中使用
 在浏览器中发送 XMLHttpRequests 请求；在 node.js 中发送 http请求；支持 Promise API；拦截请求和响应；转换请求和响应数据；自动转换 JSON 数据；客户端支持保护安全免受 XSRF 攻击；简单、轻量，不会影响前端的加载速度。
+
+**ECharts**
+
+是百度的一个开源的数据可视化工具，一个纯 Javascript 的图表库，能够在 PC 端和移动设备上流畅运行，兼容当前绝大部分浏览器（IE6/7/8/9/10/11，chrome，firefox，Safari等），底层依赖轻量级的 Canvas 库 ZRender，ECharts 提供直观，生动，可交互，可高度个性化定制的数据可视化图表。创新的拖拽重计算、数据视图、值域漫游等特性大大增强了用户体验，赋予了用户对数据进行挖掘、整合的能力。
+ECharts 属于开源软件，并且我们提供了非常炫酷的图形界面，特色是地图，另外还提供了柱状图、折线图、饼图、气泡图及四象限图等； 
+ECharts 使用简单，在官网中为我们封装了 JS，只要会引用就会得到完美的展示效果； 
+ECharts 种类多，ECharts 实现简单，各类图形都有；相应的模板，还有丰富的 API 及文档说明，非常详细； 
+ECharts 兼容性好，基于HTML5，有着良好的动画渲染效果。 
 
 #### 1.2.2 架构设计
 
@@ -188,5 +197,45 @@ axios是基于 Promise 的 HTTP 请求客户端，可同时在浏览器和 node.
 assets 存放前端的静态资源，例如图片、图标和字体等。
 
 综合考虑使用的技术框架，并根据应用需要的组件，可以得到详细的项目结构如下所示。如果过需要新增界面、功能，引入新组件，也可以很方便地将新内容添加到项目中去。
+
+```
+.
+├── index.html # 管理系统主界面框架
+├── build      # 提供开发环境和构建项目的代码
+├── config     # 项目的webpack打包配置
+├── server     # 处理web端和服务器数据传递涉及的跨域等问题
+├── src        # 商家管理系统开发代码
+|   ├── api # axios封装成函数
+|   ├── assets # 存放前端的静态资源，例如图片、图标和字体等
+│   ├── components # 页面
+│   │   ├── changepwd.vue # 修改密码页面
+|   |   ├── home.vue       # 首页统计页面
+│   │   ├── information.vue  # 管理员信息页面
+│   │   ├── user_exam.vue  # 用户审核页面
+│   │   ├── user_list.vue  # 用户列表页面
+│   │   ├── task_list.vue  # 任务目录页面
+│   │   └── task_exam.vue  # 任务审核页面
+|   |
+│   ├── router # 页面组件
+│   │   └── index.js # 页面跳转路由
+|   |
+│   ├── view # 主界面页面
+│   |   ├── login.vue       # 登录界面
+│   |   └── index.vue       # 主页
+|   |
+│   ├── service   # 公共服务
+│   |   ├── api.js    # 与服务器进行数据传递的地址与方法处理
+│   |   └── auth.js   # 授权操作
+|   |
+│   ├── main.js     # 全局初始化
+|   └── App.vue   # 网页进入入口  
+|   |
+├── test       # 测试
+|   ├── unit       # 单元测试
+|   └── e2e        # 端到端测试
+|   |
+├── .babelrc       # babel编译参数，vue开发需要babel编译 
+└── package.json   # 项目文件，记载着一些命令和依赖还有简要的项目描述信息
+```
 
 ## 2. Server
