@@ -332,5 +332,11 @@ Mysql：
 
 在进行过登录后，loginPersistent模块存储下用户的关键信息至redis的session数据中。loginPersistent模块定义了一个中间件，会在用户访问时与调用，把session所存储的数据再从数据库进行更新，并临时存储用户的所有信息，供全局使用。
 
+#### 2.4.3 AccessCcontrol 访问控制
+访问控制层是在登录持久化的基础上实现的
+访问控制层提供了login required作为登录需求装饰器，identity required作为用户身份需求装饰器， 还有owner requied拥有者需求装饰器等供其他路由方法方便的进行访问控制。
+登录持久化中间件获得用户的身份信息。访问控制模块也定义了一个身份装饰器获取身份信息并映射到不同的身份类型。
 
+#### 2.4.4 前后端分离
+由前端通过swagger工具按照RESTful 风格定义了API, 后端服务器通过swagger-code-gen工具生成路由以及controller。后端负责开发各个management模块的功能，在生成好的controller中进行调用。
 
