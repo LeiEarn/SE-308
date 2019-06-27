@@ -221,3 +221,116 @@ assets 存放前端的静态资源，例如图片、图标和字体等。
 综合考虑使用的技术框架，并根据应用需要的组件，可以得到详细的项目结构如下所示。如果过需要新增界面、功能，引入新组件，也可以很方便地将新内容添加到项目中去。
 
 ## 2. Server
+
+### 2.1 技术栈
+
+​	我们主要使用了Nginx、Python Flask、Redis、Mysql，选择这些技术的理由如下：
+
+##### Nginx:
+
+- **Nginx**是开源的轻量级的高性能服务器。Flask等Web框架易于开发但其所带web服务器不适应生产环境。在生产环境中一般使用Nginx作为服务器底层，用于处理静态文件的访问以及将请求转发给上层Flask、Django等web框架做其他处理。
+
+##### Python Flask：
+
+- **Flask**是使用python编写的Web应用框架，内置开发服务器和快速调试器，集成支持单元测试。
+
+- **Flask**遵循极简主义原则，为项目的开发阶段提供了更多控制权，提供了更高的迭代速度。
+
+- **Flask**的代码更加轻巧简洁，加快了前后端访问测试的速度，且高可扩展性加快开发速度。
+
+##### Redis：
+
+- Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。在此项目中，使用Redis存储session，实现小程序的登录持久化。
+
+Mysql：
+
+- 代码开源，不需要支付额外的费用
+- 使用标准的SQL查询语句，后台开发成员都有一定的基础，降低学习成本。
+- MySQL是完全网络化的，可以用过网络对服务器上的数据库进行访问，使开发更加便捷
+- 配合使用PyMySQL操作库，在后端开发中更加快捷的实现事务、存储过程、批量执行、数据库读写异常处理的开发，
+
+### 2.2 架构设计
+
+![系统架构图](./structure.png)
+
+
+### 2.3 模块划分
+
+​	我们将后台分为**certificationServer**和**swaggerServer**两个部分，其中**certificationSever**用于与管理平台进行交互，为管理员提供用户管理、信息认证等功能接口；而**swaggerServer**用于与移动端的小程序进行交互，实现单独用户的创建、认证等一系列功能。
+
+- ​	文件结构组织
+
+```
+.
+├── server
+│   ├── main.py
+│   ├── c_server.py
+│   ├── certificationServer
+│   │   ├── routers
+│   │   │   ├── prove.py
+│   ├── swagger_server
+│   │   ├── config.py
+│   │   ├── constants.py
+│   │   ├── encoder.py
+│   │   ├── util.py
+│   │   ├── model*
+│   │   ├── moudules*
+│   │   ├── controllers*
+│   │   ├── routers
+│   │   │   ├── auth.py
+│   │   │   ├── img.py
+│   │   │   ├── prove.py
+│   │   ├── swagger
+│   │   │   ├── swagger.yaml
+│   │   ├── test
+│   │   │   ├── ...
+│   │   ├── utils
+│   │   │   ├── ...
+```
+
+- `model`类代码文件结构
+
+```
+├── model
+│   ├── Adminstrator.py
+│   ├── Group.py
+│   ├── Task.py
+│   ├── User.py
+```
+
+- `module`包含各类管理系统以及登录持久化的实现:
+
+```
+├── moudules
+│   ├── accessControlSystem.py
+│   ├── AdminPlatform.py
+│   ├── loginPersistent.py
+│   ├── mailSystem.py
+│   ├── taskManagementSystem.py
+│   ├── userManagementSystem.py
+```
+
+- `controllers`包含各类路由所分发向的controller文件。真正的Controller模块实际上是controller文件以及modules文件夹下的同名模块共同结合发挥作用
+
+```
+├── controllers
+│   ├── group_controller.py
+│   ├── system_controller.py
+│   ├── task_controller.py
+│   ├── user_controller.py
+```
+
+### 2.4 软件设计技术
+
+#### 2.4.1 Objected-Oriented Programming
+
+​	我们将数据库中的主要模型封装为一个类型，使用 **\_\_slot\_\_**设置实例属性节省内存，同时避免了对关键词的操作失误。对于每一个模型，我们都为其编写单独的Table类，将所有的底层数据库操作函数封装在其中，这样在进行更高层的函数设计时，就可以不用考虑数据库层面的操作。
+
+#### 2.4.2 LoginPersistent 登录持久化
+
+登录持久化层利用了session, redis,flask以及python的装饰器实现。
+
+在进行过登录后，loginPersistent模块存储下用户的关键信息至redis的session数据中。loginPersistent模块定义了一个中间件，会在用户访问时与调用，把session所存储的数据再从数据库进行更新，并临时存储用户的所有信息，供全局使用。
+
+
+
