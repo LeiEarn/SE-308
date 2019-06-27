@@ -303,7 +303,7 @@ Mysql：
 
 ### 2.2 架构设计
 
-![系统架构图](./structure.png)
+![系统架构图](./images/structure.png)
 
 
 ### 2.3 模块划分
